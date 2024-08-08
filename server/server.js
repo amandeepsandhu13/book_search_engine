@@ -3,6 +3,8 @@ const path = require('path');
 const db = require('./config/connection');
 const routes = require('./routes');
 const { ApolloServer } = require('apollo-server-express');
+const { typeDefs, resolvers } = require('./schemas');
+
 const { authMiddleware } = require('./utils/auth');
 
 
@@ -14,11 +16,22 @@ const PORT = process.env.PORT || 3001;
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: authMiddleware,
+  context: ({ req }) => {
+    const auth = authMiddleware({ req });
+    return { ...auth, req };  // Ensure context includes req
+  },
+  introspection: true,
+  formatError: (err) => {
+    // Log detailed error for debugging
+    console.error(err);
+    return err;
+  }
 });
 
-// Apply Apollo middleware to the Express server
-server.applyMiddleware({ app });
+(async() => {
+  await server.start();
+  // Apply Apollo middleware to the Express server
+server.applyMiddleware({ app }); 
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -31,5 +44,12 @@ if (process.env.NODE_ENV === 'production') {
 app.use(routes);
 
 db.once('open', () => {
-  app.listen(PORT, () => console.log(`🌍 Now listening on localhost:${PORT}`));
+  app.listen(PORT, () => {
+    console.log(`🌍 Now listening on localhost:${PORT}`);
+    console.log(`🚀 GraphQL Server ready at http://localhost:${PORT}${server.graphqlPath}`)
+  });
 });
+db.on('error', (error) => {
+  console.error('Database connection error:', error);
+});
+})();
