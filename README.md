@@ -28,7 +28,7 @@ User authentication and authorization with JWT
 
 Responsive design using React Bootstrap
 
-Technologies Used
+## Technologies Used
 
 ### Frontend: 
 React, React Bootstrap
@@ -39,13 +39,17 @@ MongoDB, Mongoose
 ### Authentication:
  JSON Web Tokens (JWT)
 
+### installation
+npm install
+npm run develop
+
 Searching for Books
 Enter keyword in the search bar and press "Search".
 Browse the search results and click on a book to view more details.
 
-GraphQL API
+### GraphQL API
 Endpoint: /graphql
 Use GraphQL queries and mutations to interact with the backend.
 
-License
+### License
 This project is licensed under the MIT License.
