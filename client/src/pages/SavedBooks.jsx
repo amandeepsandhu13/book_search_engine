@@ -7,7 +7,7 @@ import {
   Col
 } from 'react-bootstrap';
 
-import { getMe, deleteBook } from '../utils/API';
+import { getMe, saveBook, deleteBook } from '../utils/API';
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 
@@ -41,6 +41,31 @@ const SavedBooks = () => {
 
     getUserData();
   }, [userDataLength]);
+
+//handle saved book function
+const handleSaveBook = async (bookId) => {
+  const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+  if (!token) {
+    return false;
+  }
+
+  try {
+    const response = await saveBook(bookId, token);
+
+    if (!response.ok) {
+      throw new Error('something went wrong!');
+    }
+
+    const updatedUser = await response.json();
+    setUserData(updatedUser);
+    setSavedBookIds(updatedUser.savedBooks.map(book => book.bookId));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
