@@ -19,11 +19,17 @@ https://github.com/amandeepsandhu13/book_search_engine
 
 ### Features
 Search for books using the Google Books API
+
 View detailed information about each book
+
 Save books to a personal library (in progress)
+
 User authentication and authorization with JWT
+
 Responsive design using React Bootstrap
+
 Technologies Used
+
 Frontend: React, React Bootstrap
 Backend: Node.js, Express.js, Apollo Server, GraphQL
 Database: MongoDB, Mongoose
