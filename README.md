@@ -2,7 +2,7 @@ MERN: Book Search Engine
 This project is a Google Books search engine built using the MERN stack (MongoDB, Express.js, React, Node.js) and refactored to use a GraphQL API with Apollo Server. The application allows users to search for books, view book details, and save books to their personal library. User authentication is implemented using JSON Web Tokens (JWT).
 
 ### Table of Contents
-Demo
+Live Link
 Features
 Technologies Used
 Installation
